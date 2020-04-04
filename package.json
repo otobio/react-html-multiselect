@@ -1,43 +1,49 @@
 {
-  "name": "react-dropdown-multiselect",
-  "version": "1.0.0",
-  "description": "React multiselect dropdown component",
-  "main": "dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/ahstro/react-dropdown-multiselect.git"
-  },
-  "keywords": [
-    "react",
-    "react-component",
-    "component",
-    "dropdown",
-    "multiselect",
-    "multi",
-    "select"
-  ],
-  "author": {
-    "name": "Anton Strömkvist",
-    "email": "hi@ahst.ro",
-    "url": "http://ahst.ro"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ahstro/react-dropdown-multiselect/issues"
-  },
-  "homepage": "https://github.com/ahstro/react-dropdown-multiselect",
-  "peerDependencies": {
-    "react": "^0.14.0 || ^15",
-    "react-dom": "^0.14.0 || ^15"
-  },
-  "dependencies": {
-    "classnames": "^2.1.3"
-  },
-  "devDependencies": {
-    "babel": "^4.7.16",
-    "watchify": "^2.6.0"
-  },
-  "scripts": {
-    "build": "babel index.js > dist/index.js"
-  }
+    "name": "react-html-multiselect",
+    "version": "1.0.0",
+    "description": "React multiselect html component",
+    "main": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/otobio/react-html-multiselect.git"
+    },
+    "keywords": [
+        "react",
+        "react-component",
+        "component",
+        "dropdown",
+        "multiselect",
+        "multi",
+        "select"
+    ],
+    "author": {
+        "name": "Ojutiku Oluwatobi",
+        "email": "ojutiku.oluwatobi@gmail.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/otobio/react-html-multiselect/issues"
+    },
+    "homepage": "https://github.com/otobio/react-html-multiselect",
+    "dependencies": {
+        "classnames": "^2.1.3"
+    },
+    "babel": {
+        "presets": [
+            "@babel/react",
+            "@babel/env"
+        ]
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.7.0",
+        "@babel/core": "^7.7.2",
+        "@babel/preset-env": "^7.7.1",
+        "@babel/preset-react": "^7.7.0",
+        "react": "^0.14.7 || ^15.0.0-0 || ^16.0.0",
+        "react-dom": "^0.14.7 || ^15.0.0-0 || ^16.0.0",
+        "watchify": "^3.7.0"
+    },
+    "scripts": {
+        "build": "babel index.js -o dist/index.js"
+    }
 }
