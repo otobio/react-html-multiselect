@@ -1,39 +1,32 @@
 Disclaimer
 ======
-This is  a fork of [react-dropdown](https://github.com/fraserxu/react-dropdown)
-by [fraserxu](https://github.com/fraserxu), so huge thanks to them!
-I just needed multiselect for a project and forked,
-so since I don't expect anyone else to really use this,
-I'm not going to spend a lot of time rewriting the docs.
-What follows is basically just react-dropdown's README after
-a `s/react-dropdown/\0-multiselect/g`, so things are bound not
-to be accurate AT ALL.
-Might rewrite it at some point if I feel like it.
+This is  a fork of [react-dropdown-multiselect](https://github.com/ahstro/react-dropdown-multiselect)
+by [ahstro](https://github.com/ahstro), so huge thanks to him.
+I just needed a simple multiselect for a project and forked.
 
-react-dropdown-multiselect
-==============
+react-html-multiselect
+======================
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][downloads-url]
 
-Simple Dropdown component for React, inspired by [react-select](https://github.com/JedWatson/react-select)
-
 
 ### Why
 
+* The default html multi-select seems like a different element to the single-select
+* Most custom select does not work out of box with normal html form, this does.
 * The default HTML select element is hard to style
-* And sometime we also want grouped menus
 * if you want more advanced select, check [react-select](https://github.com/JedWatson/react-select)
 
 ### Installation
 
 ```
-$ npm install react-dropdown-multiselect  --save
+// With npm
+$ npm install react-html-multiselect  --save
+
+// With yarn
+$ yarn add react-html-multiselect
 ```
-
-### Changelog
-
-If you want to support React version under v0.13, use react-dropdown@v0.6.1
 
 ### Usage
 
@@ -91,6 +84,48 @@ React.render(<App />, document.body)
 
 ```
 $ cd example && npm install && npm run watch
+```
+
+### Customizing the dropdown
+
+**name**
+
+The `name` prop is passed down to the hidden `select`
+
+```JavaScript
+<Dropdown name='element-name' />;
+```
+
+**className**
+
+The `className` prop is passed down to the wrapper `div`, which also has the `Dropdown-root` class.
+
+```JavaScript
+<Dropdown className='myClassName' />;
+```
+
+**controlClassName**
+
+The `controlClassName` prop is passed down to the control `div`, which also has the `Dropdown-control` class.
+
+```JavaScript
+<Dropdown controlClassName='myControlClassName' />;
+```
+
+**menuClassName**
+
+The `menuClassName` prop is passed down to the menu `div` (the one that opens and closes and holds the options), which also has the `Dropdown-menu` class.
+
+```JavaScript
+<Dropdown menuClassName='myMenuClassName' />;
+```
+
+**noPreview**
+
+The `noPreview` prop is meant to disable the display of selected values, and instead display the count of selected value.
+
+```JavaScript
+<Dropdown noPreview='Y' />;
 ```
 
 ### License
