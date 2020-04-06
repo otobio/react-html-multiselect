@@ -62,14 +62,16 @@ class Dropdown extends React.Component {
     }
 
     renderOption(option) {
+        const selected = this.state.selected.indexOf(option) !== -1;
         const optionClass = classNames({
             "Dropdown-option": true,
-            "is-selected": this.state.selected.indexOf(option) !== -1,
+            "is-selected": selected,
         });
 
         return (
             <div
                 role="option"
+                aria-selected={selected}
                 key={option.value}
                 className={optionClass}
                 onClick={this.setValue.bind(this, option)}
@@ -101,14 +103,11 @@ class Dropdown extends React.Component {
     }
 
     renderHtmlOptions() {
-        const selectedValues = this.state.selected
-            .map((item) => String(item.value));
-
         return this.props.options.map((option) => (
             <option
                 key={option.value}
                 value={option.value}
-                selected={selectedValues.indexOf(String(option.value)) > -1}
+                selected={this.state.selected.indexOf(option) > -1}
             >
                 {option.label}
             </option>
