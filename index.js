@@ -51,12 +51,15 @@ class Dropdown extends React.Component {
     }
 
     setValue(option) {
-        if (option.disabled) {
+        const { selected } = this.state;
+        const optionIndex = selected.indexOf(option);
+
+        if (
+            option.disabled
+            || (selected.length >= this.props.maxSelectLength && optionIndex === -1)) {
             return;
         }
 
-        const { selected } = this.state;
-        const optionIndex = selected.indexOf(option);
         const newState = {
             selected: optionIndex === -1
                 ? selected.concat(option)
@@ -168,6 +171,7 @@ Dropdown.propTypes = {
     menuClassName: PropTypes.string,
     className: PropTypes.string,
     noPreview: PropTypes.bool,
+    maxSelectLength: PropTypes.number,
 };
 
 Dropdown.defaultProps = {
@@ -175,6 +179,7 @@ Dropdown.defaultProps = {
     menuClassName: "Dropdown-menu",
     onChange: () => {},
     placeholder: "Select",
+    maxSelectLength: Infinity,
 };
 
 export default Dropdown;

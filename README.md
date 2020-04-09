@@ -128,6 +128,14 @@ The `noPreview` prop is meant to disable the display of selected values, and ins
 <Dropdown noPreview='Y' />;
 ```
 
+**maxSelectLength**
+
+The `maxSelectLength` prop is meant to limit the number of possible option(s) that can be selected at any time. Defaults to Infinity.
+
+```JavaScript
+<Dropdown maxSelectLength={2} />;
+```
+
 ### License
 
 MIT | Build for [CSViz](https://csviz.org) project @[Wiredcraft](http://wiredcraft.com)
