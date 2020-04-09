@@ -53,7 +53,7 @@ class App extends React.Component {
 
     const options = [
       { value: 'one', label: 'One' },
-      { value: 'two', label: 'Two' },
+      { value: 'two', label: 'Two', disabled: true },
       {
         type: 'group', name: 'group1', items: [
           { value: 'three', label: 'Three' },

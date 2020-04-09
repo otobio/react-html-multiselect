@@ -51,6 +51,10 @@ class Dropdown extends React.Component {
     }
 
     setValue(option) {
+        if (option.disabled) {
+            return;
+        }
+
         const { selected } = this.state;
         const optionIndex = selected.indexOf(option);
         const newState = {
@@ -66,6 +70,7 @@ class Dropdown extends React.Component {
         const optionClass = classNames({
             "Dropdown-option": true,
             "is-selected": selected,
+            disabled: Boolean(option.disabled),
         });
 
         return (
@@ -108,6 +113,7 @@ class Dropdown extends React.Component {
                 key={option.value}
                 value={option.value}
                 selected={this.state.selected.indexOf(option) > -1}
+                disabled={Boolean(option.disabled)}
             >
                 {option.label}
             </option>

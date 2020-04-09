@@ -84,6 +84,12 @@
   color: #333;
 }
 
+.Dropdown-option.disabled {
+  cursor: not-allowed;
+  background: #dddddd;
+  color: silver;
+}
+
 .Dropdown-noresults {
   box-sizing: border-box;
   color: #ccc;
