@@ -45,6 +45,7 @@ class Dropdown extends React.Component {
         event.stopPropagation();
         event.preventDefault();
 
+        this.filterOptions("");
         this.setState((pState) => ({
             isOpen: !pState.isOpen,
         }));
@@ -68,12 +69,34 @@ class Dropdown extends React.Component {
         this.setState(newState);
     }
 
+    filterOptions(query) {
+        if (this.props.withSearch) {
+            this.props.options.forEach((o, i) => {
+                this.props.options[i].hidden = o.value.toLowerCase()
+                    .indexOf(query.toLowerCase()) === -1;
+            });
+            this.forceUpdate();
+        }
+    }
+
+    renderSearch() {
+        return this.props.withSearch ? (
+            <input
+                type="text"
+                tabIndex="-1"
+                placeholder="Filter .."
+                onChange={(e) => this.filterOptions(e.target.value)}
+            />
+        ) : null;
+    }
+
     renderOption(option) {
         const selected = this.state.selected.indexOf(option) !== -1;
         const optionClass = classNames({
             "Dropdown-option": true,
-            "is-selected": selected,
+            selected,
             disabled: Boolean(option.disabled),
+            hidden: Boolean(option.hidden),
         });
 
         return (
@@ -135,7 +158,12 @@ class Dropdown extends React.Component {
         } = this.props;
         const { selected, isOpen } = this.state;
         const value = selected.map((option) => option.label).join(", ");
-        const menu = isOpen ? <div className={menuClassName}>{this.buildMenu()}</div> : null;
+        const menu = isOpen ? (
+            <div className={menuClassName}>
+                {this.renderSearch()}
+                {this.buildMenu()}
+            </div>
+        ) : null;
 
         const dropdownClass = classNames({
             Dropdown: true,
@@ -170,8 +198,9 @@ Dropdown.propTypes = {
     controlClassName: PropTypes.string,
     menuClassName: PropTypes.string,
     className: PropTypes.string,
-    noPreview: PropTypes.bool,
     maxSelectLength: PropTypes.number,
+    noPreview: PropTypes.bool,
+    withSearch: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
@@ -180,6 +209,7 @@ Dropdown.defaultProps = {
     onChange: () => {},
     placeholder: "Select",
     maxSelectLength: Infinity,
+    withSearch: true,
 };
 
 export default Dropdown;
