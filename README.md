@@ -136,6 +136,14 @@ The `maxSelectLength` prop is meant to limit the number of possible option(s) th
 <Dropdown maxSelectLength={2} />;
 ```
 
+**withSearch**
+
+The `withSearch` prop is a toggle to show the searchbox. Defaults to True.
+
+```JavaScript
+<Dropdown maxSelectLength={2} />;
+```
+
 ### License
 
 MIT | Build for [CSViz](https://csviz.org) project @[Wiredcraft](http://wiredcraft.com)
