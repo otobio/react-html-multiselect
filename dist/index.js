@@ -90,6 +90,7 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
       if (event.type === "mousedown" && event.button !== 0) return;
       event.stopPropagation();
       event.preventDefault();
+      this.filterOptions("");
       this.setState(function (pState) {
         return {
           isOpen: !pState.isOpen
@@ -101,20 +102,55 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
     value: function setValue(option) {
       var selected = this.state.selected;
       var optionIndex = selected.indexOf(option);
+
+      if (option.disabled || selected.length >= this.props.maxSelectLength && optionIndex === -1) {
+        return;
+      }
+
       var newState = {
         selected: optionIndex === -1 ? selected.concat(option) : selected.slice(0, optionIndex).concat(selected.slice(optionIndex + 1))
       };
       this.setState(newState);
     }
   }, {
+    key: "filterOptions",
+    value: function filterOptions(query) {
+      var _this2 = this;
+
+      if (this.props.withSearch) {
+        this.props.options.forEach(function (o, i) {
+          _this2.props.options[i].hidden = o.value.toLowerCase().indexOf(query.toLowerCase()) === -1;
+        });
+        this.forceUpdate();
+      }
+    }
+  }, {
+    key: "renderSearch",
+    value: function renderSearch() {
+      var _this3 = this;
+
+      return this.props.withSearch ? /*#__PURE__*/_react["default"].createElement("input", {
+        type: "text",
+        tabIndex: "-1",
+        placeholder: "Filter ..",
+        onChange: function onChange(e) {
+          return _this3.filterOptions(e.target.value);
+        }
+      }) : null;
+    }
+  }, {
     key: "renderOption",
     value: function renderOption(option) {
+      var selected = this.state.selected.indexOf(option) !== -1;
       var optionClass = (0, _classnames["default"])({
         "Dropdown-option": true,
-        "is-selected": this.state.selected.indexOf(option) !== -1
+        selected: selected,
+        disabled: Boolean(option.disabled),
+        hidden: Boolean(option.hidden)
       });
       return /*#__PURE__*/_react["default"].createElement("div", {
         role: "option",
+        "aria-selected": selected,
         key: option.value,
         className: optionClass,
         onClick: this.setValue.bind(this, option),
@@ -125,7 +161,7 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "buildMenu",
     value: function buildMenu() {
-      var _this2 = this;
+      var _this4 = this;
 
       var ops = this.props.options.map(function (option) {
         if (option.type === "group") {
@@ -134,7 +170,7 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
           }, option.name);
 
           var options = option.items.map(function (item) {
-            return _this2.renderOption(item);
+            return _this4.renderOption(item);
           });
           return /*#__PURE__*/_react["default"].createElement("div", {
             className: "group",
@@ -142,7 +178,7 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
           }, groupTitle, options);
         }
 
-        return _this2.renderOption(option);
+        return _this4.renderOption(option);
       });
       return ops.length ? ops : /*#__PURE__*/_react["default"].createElement("div", {
         className: "Dropdown-noresults"
@@ -151,14 +187,14 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderHtmlOptions",
     value: function renderHtmlOptions() {
-      var selectedValues = this.state.selected.map(function (item) {
-        return String(item.value);
-      });
+      var _this5 = this;
+
       return this.props.options.map(function (option) {
         return /*#__PURE__*/_react["default"].createElement("option", {
           key: option.value,
           value: option.value,
-          selected: selectedValues.indexOf(String(option.value)) > -1
+          selected: _this5.state.selected.indexOf(option) > -1,
+          disabled: Boolean(option.disabled)
         }, option.label);
       });
     }
@@ -188,7 +224,7 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
       }).join(", ");
       var menu = isOpen ? /*#__PURE__*/_react["default"].createElement("div", {
         className: menuClassName
-      }, this.buildMenu()) : null;
+      }, this.renderSearch(), this.buildMenu()) : null;
       var dropdownClass = (0, _classnames["default"])({
         Dropdown: true,
         "is-open": isOpen
@@ -224,13 +260,17 @@ Dropdown.propTypes = {
   controlClassName: _propTypes["default"].string,
   menuClassName: _propTypes["default"].string,
   className: _propTypes["default"].string,
-  noPreview: _propTypes["default"].bool
+  maxSelectLength: _propTypes["default"].number,
+  noPreview: _propTypes["default"].bool,
+  withSearch: _propTypes["default"].bool
 };
 Dropdown.defaultProps = {
   controlClassName: "Dropdown-control",
   menuClassName: "Dropdown-menu",
   onChange: function onChange() {},
-  placeholder: "Select"
+  placeholder: "Select",
+  maxSelectLength: Infinity,
+  withSearch: true
 };
 var _default = Dropdown;
 exports["default"] = _default;
